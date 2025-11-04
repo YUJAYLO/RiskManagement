@@ -5,24 +5,28 @@
 #include "../common/tradingAccount.h"
 #include "../inventory/inventory.h"
 
-#include <map>
-#include <string>
+class Client{
+    public:
+        enum class accountFlag : char{ 
+            OPENED = 'Y', 
+            CLOSED = 'E', 
+            NOT_OPENED = ' '
+        };
 
-class Client {
     private:
         BrokerId _brokerID;             
         TradingAccount _tradingAccount; 
-        bool account_status_;           // Open account flag
-        int trading_quota_;             
-        int used_quota_;                
+        accountFlag accountFlag_;           // Open account flag
+        int tradingQuota_;             
+        int usedQuota_;                
         Inventory inventory_;           // Inventory data
         
     public:
         Client(const BrokerId& broker_id,
                 const TradingAccount& trading_account,
-                bool account_status,
-                int trading_quota,
-                int used_quota,
+                accountFlag accountFlag,
+                int tradingQuota,
+                int usedQuota,
                 Inventory inventory
             );
 };
