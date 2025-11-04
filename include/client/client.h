@@ -1,9 +1,9 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "../../common/include/brokerID.h"
-#include "../../common/include/tradingAccount.h"
-#include "../../models/include/inventory.h"
+#include "../common/brokerID.h"
+#include "../common/tradingAccount.h"
+#include "../inventory/inventory.h"
 
 #include <map>
 #include <string>
