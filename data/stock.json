@@ -1,0 +1,22 @@
+{
+  "2330": {
+    "stockName": "台積電",
+    "stockPrice": "00580.0000",
+    "stageStr": "N"
+  },
+  "2317": {
+    "stockName": "鴻海",
+    "stockPrice": "00105.5000",
+    "stageStr": "N"
+  },
+  "2454": {
+    "stockName": "聯發科",
+    "stockPrice": "00920.0000",
+    "stageStr": "W"
+  },
+  "6505": {
+    "stockName": "台塑化",
+    "stockPrice": "00085.3000",
+    "stageStr": "F"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "9800-12345678": {
+    "accountFlag": "Y",
+    "tradingQuota": "1000000",
+    "usedQuota": "250000"
+  },
+  "9800-87654321": {
+    "accountFlag": "Y",
+    "tradingQuota": "500000",
+    "usedQuota": "100000"
+  },
+  "1234-11111111": {
+    "accountFlag": "E",
+    "tradingQuota": "0",
+    "usedQuota": "0"
+  },
+  "5678-22222222": {
+    "accountFlag": " ",
+    "tradingQuota": "0",
+    "usedQuota": "0"
+  }
+}

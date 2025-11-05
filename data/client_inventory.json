@@ -1,0 +1,33 @@
+{
+  "9800-12345678": [
+    {
+      "stockId": "2330",
+      "totalShares": "1000",
+      "usedShares": "200"
+    },
+    {
+      "stockId": "2317",
+      "totalShares": "500",
+      "usedShares": "0"
+    },
+    {
+      "stockId": "2454",
+      "totalShares": "300",
+      "usedShares": "100"
+    }
+  ],
+  "9800-87654321": [
+    {
+      "stockId": "2330",
+      "totalShares": "2000",
+      "usedShares": "500"
+    },
+    {
+      "stockId": "6505",
+      "totalShares": "1500",
+      "usedShares": "0"
+    }
+  ],
+  "1234-11111111": [],
+  "5678-22222222": []
+}
