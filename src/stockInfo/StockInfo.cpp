@@ -62,3 +62,7 @@ std::string StockInfo::convertStageToString() const {
             return "";
     }
 }
+
+bool StockInfo::isBetweenLimit() const {
+    return _referencePrice >= _limitDownPrice && _referencePrice <= _limitUpPrice;
+}
