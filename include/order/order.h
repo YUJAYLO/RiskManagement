@@ -31,7 +31,7 @@ class Order{
     private:
         BrokerId _brokerId;
         TradingAccount _tradingAccount;
-        StockId _stockId;
+        StockID _stockId;
         StockInfo _stockInfo;
         Price _price; // 5 digits of integer and 4 digits of decimal
         int _quantity;

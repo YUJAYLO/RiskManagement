@@ -5,11 +5,11 @@
 #include <stdexcept>
 #include <tuple>
 
-StockInfo::StockInfo(const std::string& stockId) : _id(stockId) {
+StockInfo::StockInfo(const std::string& stockID) : _id(stockID) {
     std::string stockName;
     std::string stockPrice;
     std::string stageStr;
-    tie(stockName, stockPrice, stageStr) = DataManager::fetchStockData(stockId);
+    std::tie(stockName, stockPrice, stageStr) = DataManager::fetchStockData(stockID);
 
     _name = stockName;
     _referencePrice = Price(stockPrice);
@@ -24,7 +24,7 @@ std::string StockInfo::toString() const {
            ", Reference Price: " + _referencePrice.toString() +
            ", Limit Up Price: " + _limitUpPrice.toString() +
            ", Limit Down Price: " + _limitDownPrice.toString() +
-           ", Stage: " + convertStageToString() + "]";
+           ", Stage: " + getStage() + "]";
 }
 
 void StockInfo::parseStageStr(const std::string& stageStr) {
@@ -53,7 +53,7 @@ void StockInfo::parseStageStr(const std::string& stageStr) {
     }
 }
 
-std::string StockInfo::convertStageToString() const {
+std::string StockInfo::getStage() const {
     switch (_stage) {
         case Stage::Warning:
             return "W";

@@ -9,7 +9,7 @@ public:
     enum class Stage { Normal, Warning, FutherDisposition};
 
 private:
-    StockId _id;
+    StockID _id;
     std::string _name;
     Price _referencePrice;   // 參考價
     Price _limitUpPrice;     // 漲停價
@@ -19,14 +19,14 @@ private:
     void parseStageStr(const std::string& stageStr);
 
 public:
-    StockInfo(const std::string& stockId); // initial constructor
+    StockInfo(const std::string& stockID); // initial constructor
 
     bool isBetweenLimit() const;
-    std::string convertStageToString() const; // helper function
+    std::string getStage() const; // helper function
 
     // Getter
     Price getPrice() const { return _referencePrice; }
-    StockId getStockID() const { return _id; }
+    StockID getStockID() const { return _id; }
 
     std::string toString() const;
 };

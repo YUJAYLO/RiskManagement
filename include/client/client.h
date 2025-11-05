@@ -16,19 +16,17 @@ class Client{
     private:
         BrokerId _brokerID;             
         TradingAccount _tradingAccount; 
-        accountFlag accountFlag_;           // Open account flag
-        int tradingQuota_;             
-        int usedQuota_;                
-        Inventory inventory_;           // Inventory data
+        accountFlag _accountFlag;       // Open account flag
+        int _tradingQuota;             
+        int _usedQuota;                
+        Inventory _inventory;           // Inventory data
         
     public:
-        Client(const BrokerId& broker_id,
-                const TradingAccount& trading_account,
-                accountFlag accountFlag,
-                int tradingQuota,
-                int usedQuota,
-                Inventory inventory
-            );
+        Client( const BrokerId& broker_id,
+                const TradingAccount& trading_account);
+
+        // Getters
+        inline char getAccountFlag() const { return static_cast<char>(_accountFlag); }
 };
 
 #endif
