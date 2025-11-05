@@ -17,6 +17,8 @@ public:
     Price(const std::string& priceStr);  // Initial constructor
 
     Price& operator=(const std::string& priceStr);
+    bool operator>=(const Price& other) const;
+    bool operator<=(const Price& other) const;
 
     static Price calculateLimitUpPrice(const Price& price);
     static Price calculateLimitDownPrice(const Price& price);

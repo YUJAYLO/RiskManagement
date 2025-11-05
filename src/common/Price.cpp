@@ -32,6 +32,14 @@ Price& Price::operator=(const std::string& priceStr) {
     return *this;
 }
 
+bool Price::operator>=(const Price& other) const {
+    return _price >= other._price;
+}
+
+bool Price::operator<=(const Price& other) const{
+    return _price <= other._price;
+}
+
 std::string Price::toString() const {
     float val = _price* 1e-4f; // int* float => float
 

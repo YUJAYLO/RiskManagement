@@ -25,13 +25,11 @@ public:
               const std::string& stockPrice,
               const std::string& stageStr); // initial constructor
 
-    bool isBetweenLimit(double price) const;
+    bool isBetweenLimit() const;
 
     // Getter
-    double getPrice() const { return _price; }
-    StockId getStockID() const {
-        return _id;
-    }
+    Price getPrice() const { return _referencePrice; }
+    StockId getStockID() const { return _id; }
 
     std::string toString() const;
 };
