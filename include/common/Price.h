@@ -14,6 +14,7 @@ public:
 
     Price& operator=(const std::string& priceStr);
 
+    
     std::string toString() const;
 };
 

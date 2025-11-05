@@ -4,24 +4,20 @@
 #include <string>
 #include <chrono>
 
-class Timestamp {
+class TimeStamp {
     private:
-        struct TimeStamp {
+        struct TimeData {  
             int HH;
             int MM;
             int SS;
             int mmm;
         };
-        TimeStamp _timestamp;
+        TimeData _timestamp;
 
         bool isValid(int HH, int MM, int SS, int mmm) const;
 
     public:
-        Timestamp(); // Default constructor (current time)
-        Timestamp(int HH, int MM, int SS, int mmm); // Initial constructor
-        Timestamp(const Timestamp& other); // Copy constructor
-
-        Timestamp& operator=(const std::string& timeStr);
+        TimeStamp(const std::string& timeStampStr);
 
         std::string toString() const;
 };
