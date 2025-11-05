@@ -10,9 +10,7 @@ Order::Order(
     const std::string& priceStr,
     const std::string& quantityStr,
     const std::string& orderTypeStr,
-    const std::string& priceTypeStr,
-    const std::string& orderTimeStr,
-    const std::string& forceFlagStr)
+    const std::string& priceTypeStr)
     : _brokerId(brokerIdStr)
     , _tradingAccount(accountNumStr, BrokerId(brokerIdStr))
     , _stockId(stockIdStr)
@@ -23,7 +21,6 @@ Order::Order(
                  ? OrderType::BUY : OrderType::SELL)
     , _priceType((priceTypeStr == "1") ? PriceType::Market : PriceType::Limit)
     , _forceFlag(ForceFlagType::NO_FORCE)
-    , _orderTime(orderTimeStr)
 {   
     // Checkpoint1: Price Type and Limit Check
     if (_priceType == PriceType::Limit) {
@@ -32,7 +29,7 @@ Order::Order(
         }
     }
     
-    // 檢核2: 強迫旗標與股票狀態檢查
+    // Checkpoint2: Stock Stage Warning
     std::string stage = _stockInfo.convertStageToString();
     if (stage == "W" || stage == "F") {
         std::cerr << "Warning: Stock is in " << stage << " stage. ";

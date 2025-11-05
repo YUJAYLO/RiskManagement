@@ -17,7 +17,6 @@ namespace DataManager {
         return "data/";
     }
 
-    // 讀取並解析 JSON 檔案
     inline json loadAndParseJson(const std::string& filename, const std::string& basePath = "") {
         std::string filepath;
         if (basePath.empty()) {
@@ -106,6 +105,59 @@ namespace DataManager {
         }
         
         return inventoryList;
+    }
+
+    // update client inventory in client_inventory.json after order executed   
+    inline void updateClientInventory(
+        const std::string& brokerIdStr, 
+        const std::string& accountNumberStr,
+        const std::string& stockIdStr,
+        const std::string& quantityStr,
+        const std::string& OrderTypeStr) {
+        json jsonData = loadAndParseJson("client_inventory.json");
+        
+        std::string key = brokerIdStr + "-" + accountNumberStr;
+        
+        // Created new client inventory if not exists
+        if (!jsonData.contains(key)) {
+            jsonData[key] = json::array();
+        }
+        
+        // Find if the stock already exists
+        bool stockFound = false;
+        for (auto& item : jsonData[key]) {
+            if (item["stockId"] == stockIdStr) {
+                if (OrderTypeStr == "BUY") {
+                    int updatedTotalShares = item["totalShares"].get<int>() + std::stoi(quantityStr);
+                    item["totalShares"] = std::to_string(updatedTotalShares);
+                } else { // SELL
+                    int updatedTotalShares = item["totalShares"].get<int>() - std::stoi(quantityStr);
+                    item["totalShares"] = std::to_string(updatedTotalShares);
+                }
+                stockFound = true;
+                break;
+            }
+        }
+        
+        // Create new stock entry if not found (Buy new stock only)
+        if (!stockFound) { 
+            json newStock = {
+                {"stockId", stockIdStr},
+                {"totalShares", quantityStr},
+                {"usedShares", 0}
+            };
+            jsonData[key].push_back(newStock);
+        }
+        
+        std::string filepath = getDataPath() + "client_inventory.json";
+        std::ofstream file(filepath);
+        
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open file for writing: " + filepath);
+        }
+        
+        file << jsonData.dump(2); 
+        file.close();
     }
 }
 
