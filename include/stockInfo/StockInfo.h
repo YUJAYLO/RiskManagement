@@ -17,15 +17,12 @@ private:
     Stage _stage;      // 股票狀態
 
     void parseStageStr(const std::string& stageStr);
-    std::string convertStageToString() const; // helper function
 
 public:
-    StockInfo(const std::string& stockId,
-              const std::string& stockName,
-              const std::string& stockPrice,
-              const std::string& stageStr); // initial constructor
+    StockInfo(const std::string& stockId); // initial constructor
 
     bool isBetweenLimit() const;
+    std::string convertStageToString() const; // helper function
 
     // Getter
     Price getPrice() const { return _referencePrice; }

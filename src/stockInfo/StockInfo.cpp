@@ -1,17 +1,18 @@
 #include "../../include/stockInfo/StockInfo.h"
+#include "../../include/manager/stockDataManager.h"
 
 #include <cctype>
 #include <stdexcept>
+#include <tuple>
 
-StockInfo::StockInfo(const std::string& stockId,
-                     const std::string& stockName,
-                     const std::string& stockPrice,
-                     const std::string& stageStr)
-    : _id(stockId),
-      _name(stockName),
-      _referencePrice(stockPrice)
-{
-    // 2025.11.04 YUJAY: remember to deal with stockName.trim().
+StockInfo::StockInfo(const std::string& stockId) : _id(stockId) {
+    std::string stockName;
+    std::string stockPrice;
+    std::string stageStr;
+    tie(stockName, stockPrice, stageStr) = StockDataManager::fetchData(stockId);
+
+    _name = stockName;
+    _referencePrice = Price(stockPrice);
     _limitUpPrice = Price::calculateLimitUpPrice(_referencePrice);
     _limitDownPrice = Price::calculateLimitDownPrice(_referencePrice);
     parseStageStr(stageStr);
