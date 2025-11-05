@@ -1,5 +1,7 @@
 #include "../../include/order/order.h"
+
 #include <stdexcept>
+#include <iostream>
 
 Order::Order(
     const std::string& brokerIdStr,
@@ -20,16 +22,19 @@ Order::Order(
     , _orderType((orderTypeStr == "B" || orderTypeStr == "Buy" || orderTypeStr == "BUY") 
                  ? OrderType::BUY : OrderType::SELL)
     , _priceType((priceTypeStr == "1") ? PriceType::Market : PriceType::Limit)
-    , _forceFlag((forceFlagStr == "Y") ? ForceFlagType::FORCE : ForceFlagType::NO_FORCE)
+    , _forceFlag(ForceFlagType::NO_FORCE)
     , _orderTime(orderTimeStr)
 {   
-    // 檢核1: 限價委託單檢核委託價格是否在漲跌幅內
+    // Checkpoint1: Price Type and Limit Check
     if (_priceType == PriceType::Limit) {
-
+        if(!_stockInfo.isBetweenLimit()){
+            throw std::invalid_argument("Limit price is out of bounds.");
+        }
     }
     
     // 檢核2: 強迫旗標與股票狀態檢查
-    if (_forceFlag == ForceFlagType::NO_FORCE) {
-
+    std::string stage = _stockInfo.convertStageToString();
+    if (stage == "W" || stage == "F") {
+        std::cerr << "Warning: Stock is in " << stage << " stage. ";
     }
 }

@@ -6,7 +6,7 @@
 #include "../common/tradingAccount.h"
 #include "../common/stockID.h"
 #include "../stockInfo/StockInfo.h"
-#include "../common/timeStamp.h"
+#include "../common/timestamp.h"
 #include "../stockInfo/StockInfo.h"
 
 #include <string>
