@@ -1,5 +1,5 @@
 #include "../../include/stockInfo/StockInfo.h"
-#include "../../include/manager/stockDataManager.h"
+#include "../../include/manager/dataManager.h"
 
 #include <cctype>
 #include <stdexcept>
@@ -9,7 +9,7 @@ StockInfo::StockInfo(const std::string& stockId) : _id(stockId) {
     std::string stockName;
     std::string stockPrice;
     std::string stageStr;
-    tie(stockName, stockPrice, stageStr) = StockDataManager::fetchData(stockId);
+    tie(stockName, stockPrice, stageStr) = DataManager::fetchStockData(stockId);
 
     _name = stockName;
     _referencePrice = Price(stockPrice);
