@@ -9,8 +9,8 @@ private:
 
 public:
     StockId();                      // Default constructor
-    StockId(const StockId& other);  // Copy constructor
     StockId(const std::string& id); // Initial constructor
+    StockId(const StockId& other);  // Copy constructor
 
     StockId& operator=(const std::string& id);
 

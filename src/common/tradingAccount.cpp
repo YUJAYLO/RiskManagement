@@ -1,8 +1,11 @@
 #include "../../include/common/tradingAccount.h"
 
-TradingAccount::TradingAccount(int accountNumber, const BrokerId& brokerId){
-    if(!isValid(accountNumber))// Validate account number
-        throw std::invalid_argument("Invalid account number");
+TradingAccount::TradingAccount(const std::string& accountNumStr, const BrokerId& brokerId){
+    if(!isValid(std::stoi(accountNumStr)))// Validate account number
+        throw std::invalid_argument("Invalid account number. Account number must be 0-9999999 (7 digits max)");
+
+    if(validateCheckDigit(brokerId) == false)// Validate check digit
+        throw std::invalid_argument("Invalid check digit for the given BrokerId and input accountNumStr.");
 }
 
 bool TradingAccount::isValid(int accountNumber) const{

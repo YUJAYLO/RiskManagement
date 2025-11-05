@@ -1,7 +1,7 @@
 #ifndef STOCK_INFO_H
 #define STOCK_INFO_H
 
-#include "../common/StockID.h"
+#include "../common/stockID.h"
 #include "../common/Price.h"
 
 class StockInfo {

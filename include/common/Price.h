@@ -23,6 +23,7 @@ public:
     static Price calculateLimitUpPrice(const Price& price);
     static Price calculateLimitDownPrice(const Price& price);
 
+    
     std::string toString() const;
 };
 

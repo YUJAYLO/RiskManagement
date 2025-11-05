@@ -2,10 +2,12 @@
 #define ORDER_H
 
 #include "../common/brokerID.h"
+#include "../common/Price.h"
 #include "../common/tradingAccount.h"
 #include "../common/stockID.h"
-#include "../common/timestamp.h"
-#include "../stock/stock.h"
+#include "../stockInfo/StockInfo.h"
+#include "../common/timeStamp.h"
+#include "../stockInfo/StockInfo.h"
 
 #include <string>
 
@@ -29,27 +31,27 @@ class Order{
     private:
         BrokerId _brokerId;
         TradingAccount _tradingAccount;
-        StockID _stockID;
-        double _price; // 5 digits of integer and 4 digits of decimal
+        StockId _stockId;
+        StockInfo _stockInfo;
+        Price _price; // 5 digits of integer and 4 digits of decimal
         int _quantity;
         OrderType _orderType;
         PriceType _priceType;
-        Timestamp _orderTime;
+        TimeStamp _orderTime;
         ForceFlagType _forceFlag;
 
     public:
         Order(
-            const BrokerId& brokerId, 
-            const TradingAccount& tradingAccount,
-            const Stock& stock,
-            double price,
-            int quantity,
-            OrderType ordertype,
-            PriceType priceType,
-            const Timestamp& orderTime,
-            const ForceFlagType& forceFlag
+            const std::string& brokerTDStr,
+            const std::string& accountNumStr,
+            const std::string& stockIDStr,
+            const std::string& priceStr,
+            const std::string& quantityStr,
+            const std::string& orderTypeStr,
+            const std::string& priceTypeStr,
+            const std::string& orderTimeStr,
+            const std::string& forceFlagStr
         );
-
 };
 
 #endif

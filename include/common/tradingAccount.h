@@ -5,22 +5,20 @@
 #include "./brokerID.h" 
 
 class TradingAccount {
-private:
-    int _accountNumber; 
-    
-    bool isValid(int accountNumber) const;
-    
-public:
-    TradingAccount(int accountNumber, const BrokerId& brokerId);
-    
-    int getAccountNumber() const { return _accountNumber; }
-    std::string toString() const { return std::to_string(_accountNumber); }
-    
-    int getCheckDigit() const;
-    int generateCheckDigit(const BrokerId& brokerId) const;
-    bool validateCheckDigit(const BrokerId& brokerId) const;
-    
-    static TradingAccount createWithBroker(int baseNumber, const BrokerId& brokerId);
+    private:
+        int _accountNumber; 
+        
+        int getCheckDigit() const;
+        int generateCheckDigit(const BrokerId& brokerId) const;
+        bool validateCheckDigit(const BrokerId& brokerId) const;
+        bool isValid(int accountNumber) const;
+
+    public:
+        TradingAccount(const std::string& accountNumber, const BrokerId& brokerId); // Initial constructor
+
+        // Getter Functions
+        int getAccountNumber() const { return _accountNumber; }
+        std::string toString() const { return std::to_string(_accountNumber); }
 };
 
 #endif
