@@ -1,15 +1,15 @@
-#include "../include/client.h"
+#include "../../include/client/client.h"
 
 Client::Client(const BrokerId& broker_id,
                const TradingAccount& trading_account,
-               bool account_status,
-               int trading_quota,
-               int used_quota,
+               accountFlag accountFlag,
+               int tradingQuota,
+               int usedQuota,
                Inventory inventory
             )
             : _brokerID(broker_id),
             _tradingAccount(trading_account),
-            account_status_(account_status),
-            trading_quota_(trading_quota),
-            used_quota_(used_quota),
+            accountFlag_(accountFlag),
+            tradingQuota_(tradingQuota),
+            usedQuota_(usedQuota),
             inventory_(inventory){}
