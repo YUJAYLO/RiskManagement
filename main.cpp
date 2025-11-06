@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <tuple>
 #include "./include/manager/dataManager.h"
 #include "./include/order/order.h"
 #include "./logs/logger.h"
@@ -17,49 +18,106 @@ int main(){
     
     std::string func;
     while (true) {
-        std::cout << "Enter function (order/query stock/ query client information/ exit): " << std::endl;
+        std::cout << "Enter function (O:order/ QS:query stock/ QC:query client information/ E:exit): " << std::endl;
         std::cin >> func;
-        
-        try {
-            Order newOrder = Order(
-                getInput("Broker ID: "),  
-                getInput("Trading Account Number: "),  
-                getInput("Stock ID: "),
-                getInput("Price: "),
-                getInput("Quantity: "),
-                getInput("Order Type (B/Buy or S/Sell): "),
-                getInput("Price Type (1:Market or 2:Limit): "),
-                getInput("ForceFlag (Y:Force or N:NoForce): ")
-            );
-            
-            DataManager::updateClientInventory(
-                newOrder.getBrokerId(),
-                newOrder.getAccountNumber(),
-                newOrder.getStockId(),
-                newOrder.getQuantity(),
-                newOrder.getOrderType()
-            );
+        if(func == "O"){
+            try {
+                Order newOrder = Order(
+                    getInput("Broker ID: "),  
+                    getInput("Trading Account Number: "),  
+                    getInput("Stock ID: "),
+                    getInput("Price: "),
+                    getInput("Quantity: "),
+                    getInput("Order Type (B/Buy or S/Sell): "),
+                    getInput("Price Type (1:Market or 2:Limit): "),
+                    getInput("ForceFlag (Y:Force or N:NoForce): ")
+                );
+                
+                DataManager::updateClientInventory(
+                    newOrder.getBrokerId(),
+                    newOrder.getAccountNumber(),
+                    newOrder.getStockId(),
+                    newOrder.getQuantity(),
+                    newOrder.getOrderType()
+                );
 
-            std::cout << "✓ Order successfully created!" << std::endl;
-            logger.logOrder(
-                newOrder.getBrokerId(),
-                newOrder.getAccountNumber(),
-                newOrder.getStockId(),
-                newOrder.getPrice(),
-                newOrder.getQuantity(),
-                newOrder.getOrderType(),
-                newOrder.getPriceType(),
-                "SUCCESS" // NEED DOUBLE CHECK
-            );
+                std::cout << "Order successfully created!" << std::endl;
+                logger.logOrder(
+                    newOrder.getBrokerId(),
+                    newOrder.getAccountNumber(),
+                    newOrder.getStockId(),
+                    newOrder.getPrice(),
+                    newOrder.getQuantity(),
+                    newOrder.getOrderType(),
+                    newOrder.getPriceType(),
+                    "SUCCESS" 
+                );
+            } catch (const std::exception& e) {
+                logger.log(
+                    std::string("Order failed: ") + e.what(),
+                    "FAILED"
+                );
+            }
+        } else if(func == "QS"){
+            try{
+                auto [stockName, stockPrice, stage] = DataManager::fetchStockData(getInput("Stock ID: "));
+                std::cout << "=== Stock Information ===" << std::endl;
+                std::cout << "  Stock Name: " << stockName << std::endl;
+                std::cout << "  Stock Price: " << stockPrice << std::endl;
+                std::cout << "  Stage: " << stage << std::endl;
+            } catch (const std::exception& e){
+                logger.log(
+                    std::string("Query stock failed: ") + e.what(), 
+                    "FAILED"
+                );
+            }
+        } else if(func == "QC"){
+            std::string brokerId = getInput("Broker ID: ");
+            std::string accountNumber = getInput("Account Number: ");
             
-        } catch (const std::exception& e) {
-            logger.log(
-                std::string("Order failed: ") + e.what(),
-                "FAILED"
-            );
+            try {
+                // Fetch client info
+                auto [accountFlag, tradingQuota, usedQuota] = DataManager::fetchClientInfo(brokerId, accountNumber);
+                
+                std::cout << "=== Client Information ===" << std::endl;
+                std::cout << "  Account Status: ";
+                if (accountFlag == "Y") {
+                    std::cout << "OPENED" << std::endl;
+                } else if (accountFlag == "E") {
+                    std::cout << "CLOSED" << std::endl;
+                } else {
+                    std::cout << "NOT_OPENED" << std::endl;
+                }
+                std::cout << "  Trading Quota: " << tradingQuota << std::endl;
+                std::cout << "  Used Quota: " << usedQuota << std::endl;
+                
+                // Fetch client inventory
+                auto inventoryList = DataManager::fetchClientInventory(brokerId, accountNumber);
+                
+                std::cout << "\n=== Client Inventory ===" << std::endl;
+                if (inventoryList.empty()) {
+                    std::cout << "  No stocks in inventory" << std::endl;
+                } else {
+                    for (const auto& [stockId, totalShares, usedShares] : inventoryList) {
+                        std::cout << "  Stock ID: " << stockId << std::endl;
+                        std::cout << "  Total Shares: " << totalShares << std::endl;
+                        std::cout << "  Used Shares: " << usedShares << std::endl;
+                        std::cout << "  Available Shares: " << (std::stoi(totalShares) - std::stoi(usedShares)) << std::endl;
+                        std::cout << "  ---" << std::endl;
+                    }
+                }
+            } catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+                logger.log(
+                    std::string("Query client failed: ") + e.what(), 
+                    "FAILED"
+                );
+            }
+        } else if(func == "E"){
+            break; //Exit the program
+        } else {
+            std::cout << "Invalid function. Please try again." << std::endl;
         }
-        
-
     }
 
     return 0;
