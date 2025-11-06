@@ -1,4 +1,5 @@
 #include "../../include/order/order.h"
+#include "../../include/client/client.h"
 
 #include <stdexcept>
 #include <iostream>
@@ -34,4 +35,5 @@ Order::Order(
     if (stage == "W" || stage == "F") {
         std::cerr << "Warning: Stock is in " << stage << " stage. ";
     }
+    
 }

@@ -1,15 +1,30 @@
 #include "../../include/client/client.h"
+#include "../../include/manager/dataManager.h"
+
+#include <tuple>
 
 Client::Client(const BrokerId& broker_id,
-               const TradingAccount& trading_account,
-               accountFlag accountFlag,
-               int tradingQuota,
-               int usedQuota,
-               Inventory inventory
-            )
-            : _brokerID(broker_id),
-            _tradingAccount(trading_account),
-            accountFlag_(accountFlag),
-            tradingQuota_(tradingQuota),
-            usedQuota_(usedQuota),
-            inventory_(inventory){}
+               const TradingAccount& trading_account)
+   : _brokerID(broker_id),
+     _tradingAccount(trading_account)
+{
+   std::string accountFlagStr;
+   std::string tradingQuotaStr;
+   std::string usedQuotaStr;
+   std::tie(accountFlagStr, tradingQuotaStr, usedQuotaStr) =
+       DataManager::fetchClientInfo(broker_id.toString(), trading_account.toString());
+
+   _accountFlag = (accountFlagStr == "Y") ? accountFlag::OPENED :
+                  (accountFlagStr == "E") ? accountFlag::CLOSED : accountFlag::NOT_OPENED;
+   _tradingQuota = std::stoi(tradingQuotaStr);
+   _usedQuota =  std::stoi(usedQuotaStr);
+
+   std::vector<std::tuple<std::string, std::string, std::string>> inventoryData;
+   inventoryData = DataManager::fetchClientInventory(broker_id.toString(), trading_account.toString());
+   for (const auto& item : inventoryData) {
+       std::string stockIDStr = std::get<0>(item);
+       std::string quantityStr = std::get<1>(item);
+       std::string averagePriceStr = std::get<2>(item);
+      //  _inventory.addStock(stockIDStr, std::stoi(quantityStr), Price(averagePriceStr));
+   }
+}

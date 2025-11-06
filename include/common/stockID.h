@@ -3,23 +3,23 @@
 
 #include <string>
 
-class StockId {
+class StockID {
 private:
     std::string _id;
 
 public:
-    StockId();                      // Default constructor
-    StockId(const std::string& id); // Initial constructor
-    StockId(const StockId& other);  // Copy constructor
+    StockID();                      // Default constructor
+    StockID(const std::string& id); // Initial constructor
+    StockID(const StockID& other);  // Copy constructor
 
-    StockId& operator=(const std::string& id);
+    StockID& operator=(const std::string& id);
 
     std::string toString() const;
 
     bool isValid();
 
-    bool operator==(const StockId& other) const;
-    bool operator<(const StockId& other) const;
+    bool operator==(const StockID& other) const;
+    bool operator<(const StockID& other) const;
 };
 
 #endif
