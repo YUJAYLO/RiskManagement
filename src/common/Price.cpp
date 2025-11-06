@@ -80,24 +80,24 @@ int Price::alignToTick(int rawPrice, int tickInTenThousand, bool roundUp) {
     }
 }
 
-// 漲停：先計算 11/10，再四捨五入，最後向上對齊到 tick（避免超過上限之外的小數）
+// 漲停：先計算 11/10，再四捨五入，最後向下對齊到 tick（避免超過上限之外的小數）
 Price Price::calculateLimitUpPrice(const Price& price) {
     Price limitUp;
     long long v = static_cast<long long>(price._price) * 11; // *11
     // 先除以 10 做四捨五入
     long long rounded = (v + 5) / 10;
-    // 依 price 決定 tick，並向上對齊
+    // 依 price 決定 tick，並向下對齊
     int tick = getTickInTenThousand(price);
-    limitUp._price = static_cast<int>( alignToTick(static_cast<int>(rounded), tick, true) );
+    limitUp._price = static_cast<int>( alignToTick(static_cast<int>(rounded), tick, false) );
     return limitUp;
 }
 
-// 跌停：先計算 9/10，再四捨五入，最後向下對齊到 tick
+// 跌停：先計算 9/10，再四捨五入，最後向上對齊到 tick
 Price Price::calculateLimitDownPrice(const Price& price) {
     Price limitDown;
     long long v = static_cast<long long>(price._price) * 9; // *9
     long long rounded = (v + 5) / 10;
     int tick = getTickInTenThousand(price);
-    limitDown._price = static_cast<int>( alignToTick(static_cast<int>(rounded), tick, false) );
+    limitDown._price = static_cast<int>( alignToTick(static_cast<int>(rounded), tick, true) );
     return limitDown;
 }
