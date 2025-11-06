@@ -12,14 +12,15 @@ int main(){
     auto getInput = [](const std::string& prompt) {
         std::string input;
         std::cout << prompt;
-        std::cin >> input;
+        std::getline(std::cin, input); // 使用 getline 讀取整行輸入
         return input;
     };
     
     std::string func;
     while (true) {
-        std::cout << "Enter function (O:order/ QS:query stock/ QC:query client information/ E:exit): " << std::endl;
-        std::cin >> func;
+        std::cout << "Enter function (O:order/ QS:query stock/ QC:query client information/ E:exit): ";
+        std::getline(std::cin, func);
+
         if(func == "O"){
             try {
                 Order newOrder = Order(
@@ -64,6 +65,7 @@ int main(){
                     std::string("Order failed: ") + e.what(),
                     "FAILED"
                 );
+                std::cout << "Error: " << e.what() << std::endl;
             }
         } else if(func == "QS"){
             try{

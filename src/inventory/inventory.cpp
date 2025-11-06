@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+InventoryItem::InventoryItem()
+    : _stockID(""), _totalShares(0), _usedShares(0) {} // 預設值
+
 InventoryItem::InventoryItem(const std::string& stockID, const std::string& totalShares, const std::string& usedShares){
     _stockID = StockID(stockID);
     _totalShares = std::stoi(totalShares);

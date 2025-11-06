@@ -7,7 +7,6 @@
 #include "../common/stockID.h"
 #include "../stockInfo/StockInfo.h"
 #include "../common/timestamp.h"
-#include "../stockInfo/StockInfo.h"
 
 #include <string>
 

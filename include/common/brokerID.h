@@ -10,7 +10,7 @@ class BrokerID {
         bool isValid() const;
 
     public:
-        BrokerID(const std::string& id) : _id(id){}; // Initial constructor
+        BrokerID(const std::string& id); // Initial constructor
 
         std::string toString() const;
 };

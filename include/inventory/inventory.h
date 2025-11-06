@@ -31,6 +31,7 @@ class InventoryItem {
         bool releaseShares(int shares);
 
     public:
+        InventoryItem(); // 預設建構子
         InventoryItem(const std::string& stockID, const std::string& totalShares, const std::string& usedShares);
 
         friend class Inventory;

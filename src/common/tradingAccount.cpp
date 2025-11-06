@@ -1,5 +1,7 @@
 #include "../../include/common/tradingAccount.h"
 
+#include <stdexcept>
+
 TradingAccount::TradingAccount(const std::string& accountNumStr, const BrokerID& brokerId){
     if(!isValid(std::stoi(accountNumStr)))// Validate account number
         throw std::invalid_argument("Invalid account number. Account number must be 0-9999999 (7 digits max)");
