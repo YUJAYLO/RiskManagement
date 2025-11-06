@@ -17,7 +17,7 @@ class TimeStamp {
         bool isValid(int HH, int MM, int SS, int mmm) const;
 
     public:
-        TimeStamp(const std::string& timeStampStr);
+        TimeStamp();
 
         std::string toString() const;
 };

@@ -11,9 +11,7 @@ Order::Order(
     const std::string& priceStr,
     const std::string& quantityStr,
     const std::string& orderTypeStr,
-    const std::string& priceTypeStr,
-    const std::string& orderTimeStr,
-    const std::string& forceFlagStr)
+    const std::string& priceTypeStr)
     : _brokerId(brokerIdStr)
     , _tradingAccount(accountNumStr, BrokerId(brokerIdStr))
     , _stockId(stockIdStr)
@@ -23,8 +21,7 @@ Order::Order(
     , _orderType((orderTypeStr == "B" || orderTypeStr == "Buy" || orderTypeStr == "BUY") 
                  ? OrderType::BUY : OrderType::SELL)
     , _priceType((priceTypeStr == "1") ? PriceType::Market : PriceType::Limit)
-    , _forceFlag((forceFlagStr == "Y") ? ForceFlagType::FORCE : ForceFlagType::NO_FORCE)
-    , _orderTime(orderTimeStr)
+    , _forceFlag(ForceFlagType::NO_FORCE)
 {   
     // Checkpoint1: Price Type and Limit Check
     if (_priceType == PriceType::Limit) {
@@ -33,19 +30,10 @@ Order::Order(
         }
     }
     
-    // Checkpoint2: 強迫旗標與股票狀態檢查
-    // 2025-11-05 YUJAY: Add force flag check
-    if (_forceFlag == ForceFlagType::NO_FORCE) {
-        char stage = _stockInfo.getStage();
-        if (stage == 'W' || stage == 'F') {
-            std::cerr << "Warning: Stock is in " << stage << " stage. ";
-        }
-    }
-
-    // Checkpoint3: Client data validation can be added here if Client class is accessible
-    Client _client(_brokerId, _tradingAccount);
-    if (_client.getAccountFlag() != 'Y') {
-        throw std::invalid_argument("Trading account is not opened.");
+    // Checkpoint2: Stock Stage Warning
+    std::string stage = _stockInfo.convertStageToString();
+    if (stage == "W" || stage == "F") {
+        std::cerr << "Warning: Stock is in " << stage << " stage. ";
     }
     
 }

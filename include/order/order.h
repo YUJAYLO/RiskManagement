@@ -48,10 +48,19 @@ class Order{
             const std::string& priceStr,
             const std::string& quantityStr,
             const std::string& orderTypeStr,
-            const std::string& priceTypeStr,
-            const std::string& orderTimeStr,
-            const std::string& forceFlagStr
+            const std::string& priceTypeStr
         );
+
+        // Getter Functions
+        std::string getStockId() const { return _stockId.toString(); }
+        std::string getPrice() const { return _price.toString(); }
+        std::string getQuantity() const { return std::to_string(_quantity); };
+        std::string getOrderType() const { 
+            return (_orderType == OrderType::BUY) ? "BUY" : "SELL"; 
+        };
+        std::string getPriceType() const { 
+            return (_priceType == PriceType::Market) ? "Market" : "Limit"; 
+        }; 
 };
 
 #endif

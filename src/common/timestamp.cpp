@@ -1,33 +1,23 @@
-#include "../../include/common/timeStamp.h"
+#include "../../include/common/timestamp.h"
 
 #include <stdexcept>
 #include <iomanip>
 #include <sstream>
 
-TimeStamp::TimeStamp(const std::string& timeStampStr){
-    // Expected format: "HH:MM:SS.mmm"
-    if(timeStampStr.length() != 12 || timeStampStr[2] != ':' || 
-       timeStampStr[5] != ':' || timeStampStr[8] != '.'){
-        throw std::invalid_argument("Invalid Timestamp string format. Expected: HH:MM:SS.mmm");
-    }
-
-    // Parse components
-    int HH, MM, SS, mmm;
-    try {
-        HH = std::stoi(timeStampStr.substr(0, 2));
-        MM = std::stoi(timeStampStr.substr(3, 2));
-        SS = std::stoi(timeStampStr.substr(6, 2));
-        mmm = std::stoi(timeStampStr.substr(9, 3));
-    } catch (const std::exception& e) {
-        throw std::invalid_argument("Invalid Timestamp string: cannot parse numeric values");
-    }
-
-    // Validate before setting
-    if(!isValid(HH, MM, SS, mmm)){
-        throw std::invalid_argument("Invalid Timestamp values.");
-    }
+TimeStamp::TimeStamp(){ // Default constructor
+    // Use current system time as the default timestamp
+    auto now = std::chrono::system_clock::now();
+    auto now_time_t = std::chrono::system_clock::to_time_t(now);
+    auto now_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+        now.time_since_epoch()
+    ) % 1000;
     
-    _timestamp = {HH, MM, SS, mmm};
+    std::tm* local_time = std::localtime(&now_time_t);
+    
+    _timestamp.HH = local_time->tm_hour;
+    _timestamp.MM = local_time->tm_min;
+    _timestamp.SS = local_time->tm_sec;
+    _timestamp.mmm = static_cast<int>(now_ms.count());
 }
 
 std::string TimeStamp::toString() const{
