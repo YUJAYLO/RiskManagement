@@ -14,7 +14,7 @@ class Client{
         };
 
     private:
-        BrokerId _brokerID;             
+        BrokerID _brokerID;             
         TradingAccount _tradingAccount; 
         accountFlag _accountFlag;       // Open account flag
         int _tradingQuota;             
@@ -22,7 +22,7 @@ class Client{
         Inventory _inventory;           // Inventory data
         
     public:
-        Client( const BrokerId& broker_id,
+        Client( const BrokerID& broker_id,
                 const TradingAccount& trading_account);
 
         // Getters

@@ -9,12 +9,12 @@ class TradingAccount {
         int _accountNumber; 
         
         int getCheckDigit() const;
-        int generateCheckDigit(const BrokerId& brokerId) const;
-        bool validateCheckDigit(const BrokerId& brokerId) const;
+        int generateCheckDigit(const BrokerID& brokerId) const;
+        bool validateCheckDigit(const BrokerID& brokerId) const;
         bool isValid(int accountNumber) const;
 
     public:
-        TradingAccount(const std::string& accountNumber, const BrokerId& brokerId); // Initial constructor
+        TradingAccount(const std::string& accountNumber, const BrokerID& brokerId); // Initial constructor
 
         // Getter Functions
         int getAccountNumber() const { return _accountNumber; }

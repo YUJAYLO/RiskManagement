@@ -12,13 +12,7 @@ class BrokerID {
     public:
         BrokerID(const std::string& id) : _id(id){}; // Initial constructor
 
-
         std::string toString() const;
-
-         
-
-        bool operator==(const BrokerID& other) const;
-        bool operator<(const BrokerID& other) const;
 };
 
 #endif 

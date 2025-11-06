@@ -1,6 +1,6 @@
 #include "../../include/common/tradingAccount.h"
 
-TradingAccount::TradingAccount(const std::string& accountNumStr, const BrokerId& brokerId){
+TradingAccount::TradingAccount(const std::string& accountNumStr, const BrokerID& brokerId){
     if(!isValid(std::stoi(accountNumStr)))// Validate account number
         throw std::invalid_argument("Invalid account number. Account number must be 0-9999999 (7 digits max)");
 
@@ -17,7 +17,7 @@ int TradingAccount::getCheckDigit() const {
     return (_accountNumber % 10);
 }
 
-int TradingAccount::generateCheckDigit(const BrokerId& brokerId) const {
+int TradingAccount::generateCheckDigit(const BrokerID& brokerId) const {
     std::string brokerStr = brokerId.toString();
     int accountPrefix = _accountNumber / 10; // Exclude the last digit (check digit)
 
@@ -64,6 +64,6 @@ int TradingAccount::generateCheckDigit(const BrokerId& brokerId) const {
     return checkDigit;
 }
 
-bool TradingAccount::validateCheckDigit(const BrokerId& brokerId) const {
+bool TradingAccount::validateCheckDigit(const BrokerID& brokerId) const {
     return getCheckDigit() == generateCheckDigit(brokerId);
 }

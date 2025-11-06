@@ -3,7 +3,7 @@
 
 #include <tuple>
 
-Client::Client(const BrokerId& broker_id,
+Client::Client(const BrokerID& broker_id,
                const TradingAccount& trading_account)
    : _brokerID(broker_id),
      _tradingAccount(trading_account)
