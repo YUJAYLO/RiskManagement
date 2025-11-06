@@ -31,8 +31,10 @@ public:
     inline char getStage() const { return static_cast<char>(_stage); }
 
     // Getter
-    Price getPrice() const { return _referencePrice; }
-    StockID getStockID() const { return _id; }
+    inline Price getPrice() const { return _referencePrice; }
+    inline Price getLimitUpPrice() const { return _limitUpPrice; }
+    inline Price getLimitDownPrice() const { return _limitDownPrice; }
+    inline StockID getStockID() const { return _id; }
 
     std::string toString() const;
 };

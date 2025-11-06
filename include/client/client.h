@@ -17,16 +17,21 @@ class Client{
         BrokerID _brokerID;             
         TradingAccount _tradingAccount; 
         accountFlag _accountFlag;       // Open account flag
-        int _tradingQuota;             
-        int _usedQuota;                
+        float _tradingQuota;             
+        float _usedQuota;                
         Inventory _inventory;           // Inventory data
         
     public:
         Client( const BrokerID& broker_id,
                 const TradingAccount& trading_account);
 
+        void addUsedQuota(float amount) { _usedQuota += amount; }
+
         // Getters
         inline char getAccountFlag() const { return static_cast<char>(_accountFlag); }
+        inline float getTradingQuota() const { return _tradingQuota; }
+        inline float getUsedQuota() const { return _usedQuota; }
+        inline const Inventory& getInventory() const { return _inventory; }
 };
 
 #endif

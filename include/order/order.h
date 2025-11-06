@@ -29,16 +29,16 @@ class Order{
         };
 
     private:
-        BrokerId _brokerId;
+        BrokerID _brokerId;
         TradingAccount _tradingAccount;
         StockID _stockId;
-        StockInfo _stockInfo;
         Price _price; // 5 digits of integer and 4 digits of decimal
         int _quantity;
         OrderType _orderType;
         PriceType _priceType;
         TimeStamp _orderTime;
         ForceFlagType _forceFlag;
+        float _orderCost;
 
     public:
         Order(
@@ -63,7 +63,9 @@ class Order{
         };
         std::string getPriceType() const { 
             return (_priceType == PriceType::Market) ? "Market" : "Limit"; 
-        }; 
+        };
+        float getOrderCost() const { return _orderCost; }
+
 };
 
 #endif

@@ -78,6 +78,34 @@ namespace DataManager {
         return std::make_tuple(accountFlagStr, tradingQuotaStr, usedQuotaStr);
     }
 
+    // update client info in client_info.json before order executed
+    inline void updateClientInfo(
+        const std::string& brokerIdStr, 
+        const std::string& accountNumberStr,
+        const float& addUsedQuotaStr) {
+        json jsonData = loadAndParseJson("client_info.json");
+        
+        std::string key = brokerIdStr + "-" + accountNumberStr;
+        
+        if (!jsonData.contains(key)) {
+            throw std::runtime_error("Client not found: " + key);
+        }
+        
+        float currentUsedQuota = jsonData[key]["usedQuota"].get<float>();
+        currentUsedQuota += addUsedQuotaStr;
+        jsonData[key]["usedQuota"] = std::to_string(currentUsedQuota);
+        
+        std::string filepath = getDataPath() + "client_info.json";
+        std::ofstream file(filepath);
+        
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open file for writing: " + filepath);
+        }
+        
+        file << jsonData.dump(2); 
+        file.close();
+    }
+
     // fetch client inventory from client_inventory.json by brokerId and accountNumber
     inline std::vector<std::tuple<std::string, std::string, std::string>> fetchClientInventory(const std::string& brokerIdStr, const std::string& accountNumberStr) {
         json jsonData = loadAndParseJson("client_inventory.json");

@@ -32,6 +32,13 @@ int main(){
                     getInput("Price Type (1:Market or 2:Limit): "),
                     getInput("ForceFlag (Y:Force or N:NoForce): ")
                 );
+
+                // Update client info and inventory
+                DataManager::updateClientInfo(
+                    newOrder.getBrokerId(),
+                    newOrder.getAccountNumber(),
+                    newOrder.getOrderCost()
+                );
                 
                 DataManager::updateClientInventory(
                     newOrder.getBrokerId(),

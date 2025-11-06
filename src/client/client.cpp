@@ -16,15 +16,16 @@ Client::Client(const BrokerID& broker_id,
 
    _accountFlag = (accountFlagStr == "Y") ? accountFlag::OPENED :
                   (accountFlagStr == "E") ? accountFlag::CLOSED : accountFlag::NOT_OPENED;
-   _tradingQuota = std::stoi(tradingQuotaStr);
-   _usedQuota =  std::stoi(usedQuotaStr);
+   _tradingQuota = std::stof(tradingQuotaStr);
+   _usedQuota =  std::stof(usedQuotaStr);
 
    std::vector<std::tuple<std::string, std::string, std::string>> inventoryData;
    inventoryData = DataManager::fetchClientInventory(broker_id.toString(), trading_account.toString());
    for (const auto& item : inventoryData) {
-       std::string stockIDStr = std::get<0>(item);
-       std::string quantityStr = std::get<1>(item);
-       std::string averagePriceStr = std::get<2>(item);
-      //  _inventory.addStock(stockIDStr, std::stoi(quantityStr), Price(averagePriceStr));
+      std::string stockIDStr = std::get<0>(item);
+      std::string quantityStr = std::get<1>(item);
+      std::string averagePriceStr = std::get<2>(item);
+      
+      _inventory.add(InventoryItem(stockIDStr, quantityStr, averagePriceStr));
    }
 }
