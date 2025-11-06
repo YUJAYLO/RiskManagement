@@ -3,23 +3,22 @@
 
 #include <string>
 
-class BrokerId {
+class BrokerID {
     private:
-        std::string _id; 
+        std::string _id;
+        
+        bool isValid() const;
 
     public:
-        BrokerId(); // Default constructor
-        BrokerId(const std::string& id); // Initial constructor
-        BrokerId(const BrokerId& other); // Copy constructor
+        BrokerID(const std::string& id) : _id(id){}; // Initial constructor
 
-        BrokerId& operator=(const std::string& id);
 
         std::string toString() const;
 
-        bool isValid() const;
+         
 
-        bool operator==(const BrokerId& other) const;
-        bool operator<(const BrokerId& other) const;
+        bool operator==(const BrokerID& other) const;
+        bool operator<(const BrokerID& other) const;
 };
 
 #endif 

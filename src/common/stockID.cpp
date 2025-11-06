@@ -1,4 +1,4 @@
-#include "../../include/common/StockID.h"
+#include "../../include/common/stockID.h"
 
 #include <algorithm>
 #include <cctype>
