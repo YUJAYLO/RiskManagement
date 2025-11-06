@@ -36,8 +36,8 @@ Order::Order(
     // Checkpoint2: 強迫旗標與股票狀態檢查
     // 2025-11-05 YUJAY: Add force flag check
     if (_forceFlag == ForceFlagType::NO_FORCE) {
-        std::string stage = _stockInfo.getStage();
-        if (stage == "W" || stage == "F") {
+        char stage = _stockInfo.getStage();
+        if (stage == 'W' || stage == 'F') {
             std::cerr << "Warning: Stock is in " << stage << " stage. ";
         }
     }

@@ -24,7 +24,7 @@ std::string StockInfo::toString() const {
            ", Reference Price: " + _referencePrice.toString() +
            ", Limit Up Price: " + _limitUpPrice.toString() +
            ", Limit Down Price: " + _limitDownPrice.toString() +
-           ", Stage: " + getStage() + "]";
+           ", Stage: " + std::to_string(getStage()) + "]";
 }
 
 void StockInfo::parseStageStr(const std::string& stageStr) {
@@ -50,17 +50,6 @@ void StockInfo::parseStageStr(const std::string& stageStr) {
             break;
         default:
             throw std::invalid_argument("Invalid stage string: " + stageStr);
-    }
-}
-
-std::string StockInfo::getStage() const {
-    switch (_stage) {
-        case Stage::Warning:
-            return "W";
-        case Stage::FutherDisposition:
-            return "F";
-        default:
-            return "";
     }
 }
 
