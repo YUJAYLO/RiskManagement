@@ -31,9 +31,14 @@ Order::Order(
     }
     
     // Checkpoint2: Stock Stage Warning
-    std::string stage = _stockInfo.convertStageToString();
-    if (stage == "W" || stage == "F") {
+    char stage = _stockInfo.getStage();
+    if (stage == 'W' || stage == 'F') {
         std::cerr << "Warning: Stock is in " << stage << " stage. ";
     }
+
+    // Checkpoint3: Client data validation can be added here if Client class is accessible
+    Client _client(_brokerId, _tradingAccount);
+    if (_client.getAccountFlag() != 'Y') {
+        throw std::invalid_argument("Trading account is not opened.");
     
 }
