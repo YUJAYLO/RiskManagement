@@ -15,41 +15,35 @@ int main(){
         return input;
     };
     
-    std::cout << "=== Stock Trading System ===" << std::endl;
-    std::cout << "=== Login ===" << std::endl; 
-    
-    std::string brokerId = getInput("Please enter your Broker ID: ");
-    std::string accountNumber = getInput("Please enter your Trading Account Number: ");
-    
-
-    std::cout << "\nLogin successful! Welcome, " << brokerId << "-" << accountNumber << std::endl;
-    std::cout << "You can now start placing orders.\n" << std::endl;
-    
+    std::string func;
     while (true) {
-        std::cout << "\n=== New Order ===" << std::endl;
+        std::cout << "Enter function (order/query stock/ query client information/ exit): " << std::endl;
+        std::cin >> func;
         
         try {
             Order newOrder = Order(
-                brokerId,  
-                accountNumber,  
+                getInput("Broker ID: "),  
+                getInput("Trading Account Number: "),  
                 getInput("Stock ID: "),
                 getInput("Price: "),
                 getInput("Quantity: "),
                 getInput("Order Type (B/Buy or S/Sell): "),
-                getInput("Price Type (1:Market or 2:Limit): ")
+                getInput("Price Type (1:Market or 2:Limit): "),
+                getInput("ForceFlag (Y:Force or N:NoForce): ")
             );
             
             DataManager::updateClientInventory(
-                brokerId,
-                accountNumber,
+                newOrder.getBrokerId(),
+                newOrder.getAccountNumber(),
                 newOrder.getStockId(),
                 newOrder.getQuantity(),
                 newOrder.getOrderType()
             );
+
             std::cout << "✓ Order successfully created!" << std::endl;
             logger.logOrder(
-                brokerId,
-                accountNumber,
+                newOrder.getBrokerId(),
+                newOrder.getAccountNumber(),
                 newOrder.getStockId(),
                 newOrder.getPrice(),
                 newOrder.getQuantity(),
@@ -59,14 +53,13 @@ int main(){
             );
             
         } catch (const std::exception& e) {
-            std::cerr << "Order failed: " << e.what() << std::endl;
+            logger.log(
+                std::string("Order failed: ") + e.what(),
+                "FAILED"
+            );
         }
         
-        std::string continueOrder = getInput("\nDo you want to place another order? (Y/N): ");
-        if (continueOrder != "Y" && continueOrder != "y") {
-            std::cout << "\nThank you for using our trading system. Goodbye!" << std::endl;
-            break;
-        }
+
     }
 
     return 0;

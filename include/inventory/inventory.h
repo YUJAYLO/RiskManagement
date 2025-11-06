@@ -31,8 +31,7 @@ class InventoryItem {
         bool releaseShares(int shares);
 
     public:
-        InventoryItem(const StockID& stockID, int totalShares, int usedShares)
-            : _stockID(stockID), _totalShares(totalShares), _usedShares(usedShares){};
+        InventoryItem(const std::string& stockID, const std::string& totalShares, const std::string& usedShares);
 
         friend class Inventory;
 };
@@ -55,7 +54,7 @@ class Inventory {
         bool useShares(const StockID& stockID, int shares);                     // Commit shares for selling
         bool releaseShares(const StockID& stockID, int shares);                 // Release committed shares after sell or cancel
         
-        // Query methods(read-only)
+        // Getter Functions
         const InventoryItem* get(const StockID& stockID) const;
         const std::unordered_map<std::string, InventoryItem>& getAllInventory() const { return _inventoryStock; }
         void printInventory() const;

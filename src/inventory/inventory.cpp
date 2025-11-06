@@ -2,6 +2,18 @@
 
 #include <iostream>
 
+InventoryItem::InventoryItem(const std::string& stockID, const std::string& totalShares, const std::string& usedShares){
+    _stockID = StockID(stockID);
+    _totalShares = std::stoi(totalShares);
+    _usedShares = std::stoi(usedShares);
+}
+
+Inventory::Inventory(const std::vector<InventoryItem>& items) {
+    for(const InventoryItem& item : items){
+        _inventoryStock[item.getStockID().toString()] = item;
+    }
+}
+
 bool InventoryItem::hasEnoughShares(int requiredShares) const {
     return getAvailableShares() >= requiredShares;
 }
@@ -23,12 +35,6 @@ bool InventoryItem::releaseShares(int shares) {
     if (shares < 0 || shares > _usedShares) return false;
     _usedShares -= shares;
     return true;
-}
-
-Inventory::Inventory(const std::vector<InventoryItem>& items) {
-    for(const InventoryItem& item : items){
-        _inventoryStock[item.getStockID().toString()] = item;
-    }
 }
 
 void Inventory::add(const InventoryItem& item) {

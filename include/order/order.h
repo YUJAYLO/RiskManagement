@@ -48,10 +48,13 @@ class Order{
             const std::string& priceStr,
             const std::string& quantityStr,
             const std::string& orderTypeStr,
-            const std::string& priceTypeStr
+            const std::string& priceTypeStr,
+            const std::string& forceFlagStr
         );
 
         // Getter Functions
+        std::string getBrokerId() const { return _brokerId.toString(); }
+        std::string getAccountNumber() const { return _tradingAccount.toString(); }
         std::string getStockId() const { return _stockId.toString(); }
         std::string getPrice() const { return _price.toString(); }
         std::string getQuantity() const { return std::to_string(_quantity); };
