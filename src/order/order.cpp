@@ -28,10 +28,11 @@ Order::Order(
         throw std::invalid_argument("Quantity must be a positive integer not exceeding 9999.");
     }
 
-    StockInfo stockInfo(_stockId.toString());
+    // 使用已經創建的 _stockId,避免重複創建 StockID
+    StockInfo stockInfo(_stockId);
     // Checkpoint1: Price Type and Limit Check
     if (_priceType == PriceType::Limit) {
-        if(!stockInfo.isBetweenLimit()){
+        if(!stockInfo.isBetweenLimit(_price)){
             throw std::invalid_argument("Limit price is out of bounds.");
         }
     }

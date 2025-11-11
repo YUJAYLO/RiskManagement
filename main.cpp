@@ -3,7 +3,7 @@
 #include <tuple>
 #include "./include/manager/dataManager.h"
 #include "./include/order/order.h"
-#include "./logs/logger.h"
+#include "./include/logger/logger.h"
 
 
 int main(){
@@ -70,7 +70,7 @@ int main(){
         } else if(func == "QS"){
             try{
                 auto [stockName, stockPrice, stage] = DataManager::fetchStockData(getInput("Stock ID: "));
-                std::cout << "=== Stock Information ===" << std::endl;
+                std::cout << "\n=== Stock Information ===" << std::endl;
                 std::cout << "  Stock Name: " << stockName << std::endl;
                 std::cout << "  Stock Price: " << stockPrice << std::endl;
                 std::cout << "  Stage: " << stage << std::endl;
@@ -88,7 +88,7 @@ int main(){
                 // Fetch client info
                 auto [accountFlag, tradingQuota, usedQuota] = DataManager::fetchClientInfo(brokerId, accountNumber);
                 
-                std::cout << "=== Client Information ===" << std::endl;
+                std::cout << "\n=== Client Information ===" << std::endl;
                 std::cout << "  Account Status: ";
                 if (accountFlag == "Y") {
                     std::cout << "OPENED" << std::endl;

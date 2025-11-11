@@ -2,18 +2,16 @@
 
 #include <iostream>
 
-InventoryItem::InventoryItem()
-    : _stockID(""), _totalShares(0), _usedShares(0) {} // 預設值
-
-InventoryItem::InventoryItem(const std::string& stockID, const std::string& totalShares, const std::string& usedShares){
-    _stockID = StockID(stockID);
-    _totalShares = std::stoi(totalShares);
-    _usedShares = std::stoi(usedShares);
+InventoryItem::InventoryItem(const std::string& stockID, const std::string& totalShares, const std::string& usedShares)
+    : _stockID(stockID)  
+    , _totalShares(std::stoi(totalShares))
+    , _usedShares(std::stoi(usedShares))
+{
 }
 
 Inventory::Inventory(const std::vector<InventoryItem>& items) {
     for(const InventoryItem& item : items){
-        _inventoryStock[item.getStockID().toString()] = item;
+        _inventoryStock.insert({item.getStockID().toString(), item});
     }
 }
 
@@ -41,8 +39,10 @@ bool InventoryItem::releaseShares(int shares) {
 }
 
 void Inventory::add(const InventoryItem& item) {
-    if(!hasStock(item.getStockID())) // Only add if stockID does not exist in the inventory
-        _inventoryStock[item.getStockID().toString()] = item;
+    // 使用 insert 避免創建預設 InventoryItem
+    if(!hasStock(item.getStockID())) {
+        _inventoryStock.insert({item.getStockID().toString(), item});
+    }
 }
 
 bool Inventory::hasStock(const StockID& stockID) const {

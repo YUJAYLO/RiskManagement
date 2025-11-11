@@ -7,12 +7,12 @@
 #include <tuple>
 #include <iostream>
 
-StockInfo::StockInfo(const std::string& stockID) : _id(stockID) {
+// Constructor from StockID object - avoids creating duplicate StockID
+StockInfo::StockInfo(const StockID& stockID) : _id(stockID) {
     std::string stockName;
     std::string stockPrice;
     std::string stageStr;
-    std::cout << "Fetching data for Stock ID: " << StringUtils::trim(stockID).size() << std::endl;
-    std::tie(stockName, stockPrice, stageStr) = DataManager::fetchStockData(StringUtils::trim(stockID));
+    std::tie(stockName, stockPrice, stageStr) = DataManager::fetchStockData(_id.toString());
 
     _name = stockName;
     _referencePrice = Price(stockPrice);
@@ -56,6 +56,6 @@ void StockInfo::parseStageStr(const std::string& stageStr) {
     }
 }
 
-bool StockInfo::isBetweenLimit() const {
-    return _referencePrice >= _limitDownPrice && _referencePrice <= _limitUpPrice;
+bool StockInfo::isBetweenLimit(const Price& price) const {
+    return price >= _limitDownPrice && price <= _limitUpPrice;
 }

@@ -6,20 +6,14 @@
 class StockID {
 private:
     std::string _id;
+    
+    bool isValid();
 
 public:
-    StockID();                      // Default constructor
     StockID(const std::string& id); // Initial constructor
     StockID(const StockID& other);  // Copy constructor
 
-    StockID& operator=(const std::string& id);
-
     std::string toString() const;
-
-    bool isValid();
-
-    bool operator==(const StockID& other) const;
-    bool operator<(const StockID& other) const;
 };
 
 #endif

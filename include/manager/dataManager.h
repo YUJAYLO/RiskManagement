@@ -91,7 +91,7 @@ namespace DataManager {
             throw std::runtime_error("Client not found: " + key);
         }
         
-        float currentUsedQuota = jsonData[key]["usedQuota"].get<float>();
+        float currentUsedQuota = std::stof(jsonData[key]["usedQuota"].get<std::string>());
         currentUsedQuota += addUsedQuotaStr;
         jsonData[key]["usedQuota"] = std::to_string(currentUsedQuota);
         
@@ -156,10 +156,12 @@ namespace DataManager {
         for (auto& item : jsonData[key]) {
             if (item["stockId"] == stockIdStr) {
                 if (OrderTypeStr == "BUY") {
-                    int updatedTotalShares = item["totalShares"].get<int>() + std::stoi(quantityStr);
+                    int currentTotalShares = std::stoi(item["totalShares"].get<std::string>());
+                    int updatedTotalShares = currentTotalShares + std::stoi(quantityStr);
                     item["totalShares"] = std::to_string(updatedTotalShares);
                 } else { // SELL
-                    int updatedTotalShares = item["totalShares"].get<int>() - std::stoi(quantityStr);
+                    int currentTotalShares = std::stoi(item["totalShares"].get<std::string>());
+                    int updatedTotalShares = currentTotalShares - std::stoi(quantityStr);
                     item["totalShares"] = std::to_string(updatedTotalShares);
                 }
                 stockFound = true;
@@ -172,7 +174,7 @@ namespace DataManager {
             json newStock = {
                 {"stockId", stockIdStr},
                 {"totalShares", quantityStr},
-                {"usedShares", 0}
+                {"usedShares", "0"}
             };
             jsonData[key].push_back(newStock);
         }

@@ -1,14 +1,4 @@
 {
-  "9800-1234568": {
-    "accountFlag": "Y",
-    "tradingQuota": "1000000",
-    "usedQuota": "250000"
-  },
-  "9800-7654321": {
-    "accountFlag": "Y",
-    "tradingQuota": "500000",
-    "usedQuota": "100000"
-  },
   "1234-1111111": {
     "accountFlag": "E",
     "tradingQuota": "0",
@@ -18,5 +8,15 @@
     "accountFlag": " ",
     "tradingQuota": "0",
     "usedQuota": "0"
+  },
+  "9800-1234568": {
+    "accountFlag": "Y",
+    "tradingQuota": "1000000",
+    "usedQuota": "269426.000000"
+  },
+  "9800-7654321": {
+    "accountFlag": "Y",
+    "tradingQuota": "500000",
+    "usedQuota": "100000"
   }
 }

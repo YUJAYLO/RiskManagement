@@ -25,9 +25,9 @@ private:
     void parseStageStr(const std::string& stageStr);
 
 public:
-    StockInfo(const std::string& stockID); // initial constructor
+    StockInfo(const StockID& stockID);     // constructor from StockID object
 
-    bool isBetweenLimit() const;
+    bool isBetweenLimit(const Price& price) const; // 檢查給定價格是否在漲跌停範圍內
     inline char getStage() const { return static_cast<char>(_stage); }
 
     // Getter

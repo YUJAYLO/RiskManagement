@@ -21,7 +21,7 @@ class Logger {
         }
 
     public:
-        Logger(const std::string& logFilePath = "logs/running.log") 
+        Logger(const std::string& logFilePath = "logs/trading.log") 
             : _logFilePath(logFilePath) {
             _logFile.open(_logFilePath, std::ios::app);
             if (!_logFile.is_open()) {

@@ -1,2 +1,3 @@
 .vscode/
-.program.exe
+build/
+logs/
