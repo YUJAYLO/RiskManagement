@@ -3,11 +3,10 @@
 
 #include <stdexcept>
 
-BrokerID::BrokerID(const std::string& id) {
+BrokerID::BrokerID(const std::string& id) : _id(id) {
     if(!isValid()){
         throw std::invalid_argument("Invalid Broker ID format");
     }
-    _id = id;
 }
 
 std::string BrokerID::toString() const {
