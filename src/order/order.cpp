@@ -23,6 +23,11 @@ Order::Order(
     , _priceType((priceTypeStr == "1") ? PriceType::Market : PriceType::Limit)
     , _forceFlag((forceFlagStr == "Y") ? ForceFlagType::FORCE : ForceFlagType::NO_FORCE)
 {   
+    // _quantity celing check
+    if (_quantity <= 0 || _quantity > 9999 ) {
+        throw std::invalid_argument("Quantity must be a positive integer not exceeding 9999.");
+    }
+
     StockInfo stockInfo(_stockId.toString());
     // Checkpoint1: Price Type and Limit Check
     if (_priceType == PriceType::Limit) {
