@@ -11,6 +11,7 @@ StockInfo::StockInfo(const std::string& stockID) : _id(stockID) {
     std::string stockName;
     std::string stockPrice;
     std::string stageStr;
+    std::cout << "Fetching data for Stock ID: " << StringUtils::trim(stockID).size() << std::endl;
     std::tie(stockName, stockPrice, stageStr) = DataManager::fetchStockData(StringUtils::trim(stockID));
 
     _name = stockName;
@@ -37,11 +38,11 @@ void StockInfo::parseStageStr(const std::string& stageStr) {
     char ch;  // First character to check
     // If the string is all whitespace, treat it as empty
     if (start == std::string::npos || end == std::string::npos) {
-        ch = '\0';
+        ch = 'N';
     } else ch = toupper(stageStr[start]);
 
     switch (ch) {
-        case '\0':
+        case 'N':
             _stage = Stage::Normal;
             break;
         case 'W':

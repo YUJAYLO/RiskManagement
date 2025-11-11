@@ -12,7 +12,7 @@ StockID::StockID(const std::string& id) : _id(id) {
     if(!isValid()) {
         throw std::invalid_argument(id + " => StockID must be consist of 4~6 character of alphanumber.");
     } else {
-        _id.resize(6, 0);
+        _id.resize(6, ' ');
     }
 }
 
@@ -31,7 +31,7 @@ bool StockID::isValid() {
     if(_id.size() < 4 || _id.size() > 6) return false;
 
     // 處理補值
-    while(_id.size() > 0 && _id.back() == 0 ) _id.pop_back();
+    while(_id.size() > 0 && _id.back() == ' ' ) _id.pop_back();
 
     return all_of(_id.begin(), _id.end(), [](unsigned char c){
         return isalnum(c);
