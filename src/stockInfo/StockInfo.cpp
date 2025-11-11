@@ -1,15 +1,17 @@
 #include "../../include/stockInfo/StockInfo.h"
 #include "../../include/manager/dataManager.h"
+#include "../../include/utils/StringUtils.h"
 
 #include <cctype>
 #include <stdexcept>
 #include <tuple>
+#include <iostream>
 
 StockInfo::StockInfo(const std::string& stockID) : _id(stockID) {
     std::string stockName;
     std::string stockPrice;
     std::string stageStr;
-    std::tie(stockName, stockPrice, stageStr) = DataManager::fetchStockData(stockID);
+    std::tie(stockName, stockPrice, stageStr) = DataManager::fetchStockData(StringUtils::trim(stockID));
 
     _name = stockName;
     _referencePrice = Price(stockPrice);

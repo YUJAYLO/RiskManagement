@@ -54,6 +54,15 @@ namespace StringUtils {
         
         return str1.length() < str2.length();
     }
+
+    // Trim
+    inline std::string trim(std::string s) {
+        const char* ws = " \t\n\r";
+        size_t b = s.find_first_not_of(ws);
+        if (b==std::string::npos) return std::string{};
+        size_t e = s.find_last_not_of(ws);
+        return s.substr(b, e-b+1);
+    };
 }
 
 #endif 

@@ -1,10 +1,17 @@
 #include "../../include/common/tradingAccount.h"
 
 #include <stdexcept>
+#include <sstream>
+#include <iomanip>
+#include <iostream>
 
-TradingAccount::TradingAccount(const std::string& accountNumStr, const BrokerID& brokerId){
+TradingAccount::TradingAccount(const std::string& accountNumStr, const BrokerID& brokerId) {
+    if(accountNumStr.length() != 7)// Check length
+        throw std::invalid_argument("Account number must be exactly 7 digits long.");
+
     if(!isValid(std::stoi(accountNumStr)))// Validate account number
         throw std::invalid_argument("Invalid account number. Account number must be 0-9999999 (7 digits max)");
+    _accountNumber = std::stoi(accountNumStr);
 
     if(validateCheckDigit(brokerId) == false)// Validate check digit
         throw std::invalid_argument("Invalid check digit for the given BrokerId and input accountNumStr.");
@@ -19,49 +26,44 @@ int TradingAccount::getCheckDigit() const {
     return (_accountNumber % 10);
 }
 
+std::string TradingAccount::toString() const {
+    std::ostringstream oss;
+    oss << std::setfill('0') << std::setw(7) << _accountNumber;
+    return oss.str();
+}
+
 int TradingAccount::generateCheckDigit(const BrokerID& brokerId) const {
-    std::string brokerStr = brokerId.toString();
-    int accountPrefix = _accountNumber / 10; // Exclude the last digit (check digit)
+    std::string broker = brokerId.toString();
+    std::string account = this->toString();
+    account.pop_back(); // 刪除原始檢查碼
 
-    std::string accountPrefixStr = std::to_string(accountPrefix);
-    // Pad with leading zeros to ensure 6 digits
-    while(accountPrefixStr.length() < 6){
-        accountPrefixStr = "0" + accountPrefixStr;
-    }
+    int checkDigit=0;
+    int weight[] = {1, 3, 7};
 
-    int weights[] = {1, 3, 7};
-    int sum = 0;
-    int position = 0;
-
-    // Process BrokerId
     // Mapping: 0-9 → 0-9, A-Z → 10-35, a-z → 36-61
-    for (size_t i = 0; i < brokerStr.length(); i++) {
-        char ch = brokerStr[i];
-        int value;
-        
-        if(std::isdigit(ch)){
-            value = ch - '0'; // 0-9 → 0-9
-        } else if(std::isupper(ch)){
-            value = ch - 'A' + 10; // A-Z → 10-35
+    // 計算券商代號
+    for(int i=0; i<broker.size(); i++) {
+        char c = broker[i];
+        int val;
+
+        if(isdigit(c)) {
+            val = c - '0';
+        } else if(isupper(c)) {
+            val = c - 'A' + 10;
         } else {
-            // Must be lowercase (a-z) since BrokerId is validated as alphanumeric
-            value = ch - 'a' + 36; // a-z → 36-61
+            val = c - 'a' + 36;
         }
-        
-        // Multiply by weight and take modulo 10, then add to sum
-        sum += (value * weights[position % 3]) % 10;
-        position++;
-    }
 
-    // Process account prefix 
-    for (size_t i = 0; i < accountPrefixStr.length(); i++) {
-        int digit = accountPrefixStr[i] - '0';
-        sum += (digit * weights[position % 3]) % 10;
-        position++;
+        checkDigit += (val* weight[i%3]) % 10;
     }
+    // 計算交易帳號前6碼
+    for(int i=0; i<account.size(); i++) {
+        int val = account[i] - '0';
 
-    // Calculate check digit: (10 - sum % 10) % 10 (special case for sum % 10 == 0)
-    int checkDigit = (10 - (sum % 10)) % 10;
+        checkDigit += (val* weight[i%3]) % 10;
+    }
+    checkDigit = (10 - checkDigit%10) % 10;
+    // std::cout << "Generated Check Digit: " << checkDigit << std::endl;
 
     return checkDigit;
 }

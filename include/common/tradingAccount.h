@@ -18,7 +18,7 @@ class TradingAccount {
 
         // Getter Functions
         int getAccountNumber() const { return _accountNumber; }
-        std::string toString() const { return std::to_string(_accountNumber); }
+        std::string toString() const;
 };
 
 #endif
