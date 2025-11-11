@@ -1,3 +1,6 @@
 [2025-11-06 15:51:30] [FAILED] Order failed: Invalid Broker ID format
 [2025-11-11 11:32:53] [FAILED] Order failed: Invalid Broker ID format
 [2025-11-11 11:34:03] [FAILED] Query client failed: Client not found: 2330-12345678
+[2025-11-11 13:20:34] [FAILED] Order failed: Invalid Broker ID format
+[2025-11-11 13:29:39] [FAILED] Order failed: Invalid Broker ID format
+[2025-11-11 13:33:13] [FAILED] Order failed: Invalid Broker ID format

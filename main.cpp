@@ -18,7 +18,7 @@ int main(){
     
     std::string func;
     while (true) {
-        std::cout << "Enter function (O:order/ QS:query stock/ QC:query client information/ E:exit): ";
+        std::cout << "\nEnter function (O:order/ QS:query stock/ QC:query client information/ E:exit): ";
         std::getline(std::cin, func);
 
         if(func == "O"){
